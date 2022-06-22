@@ -47,7 +47,6 @@ jobs:
       - run: npm audit
         
 workflows:
-  # Name the workflow "hello_and_world"
   version: 2
   npm workflow:
     jobs:
