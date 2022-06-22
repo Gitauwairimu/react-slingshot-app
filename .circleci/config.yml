@@ -15,41 +15,44 @@ orbs:
   # Declare a dependency on the welcome-orb
   welcome: circleci/welcome-orb@0.4.1
 # Orchestrate or schedule a set of jobs
-working_directory: /tmp
 jobs:
-  save_hello_world_output:
+  build:
     docker:
       - image: cimg/node:13.8.0
     steps:
-      - print_pipeline_id:
-          id:
-      - run: mkdir -p workspace
-      - run: cd workspace
-      - run: sudo echo "You are working"> workspace/output.txt
-      - persist_to_workspace:
-          root: workspace
-          paths:
-            - output.txt
-      - run: cat workspace/output.txt
+      - checkout
+      - run: npm run lint
 
-  print_output_file:
+
+  test:
     docker:
       - image: cimg/node:13.8.0
     steps:
-      - attach_workspace:
-          at: workspace
-      - run: cat workspace/output.txt
-      - run: 
-          name: read_error
-          command: echo "Failed to read the output file"
-          when: on_fail
+      - checkout
+      - run: npm run test
+        
+  analyze:
+    docker:
+      - image: cimg/node:13.8.0
+    steps:
+      - checkout
+      - run: npm audit
         
 workflows:
   # Name the workflow "hello_and_world"
   version: 2
-  save_and_output_using_workspace:
+  npm workflow:
     jobs:
-      - save_hello_world_output
-      - print_output_file:
+      - build
+      - test:
           requires:
-            - save_hello_world_output
+            - build
+      - analyze:
+          requires:
+            - test
+
+Each job should have some common elements. 
+For example, before doing anything that works with code, 
+you will need to checkout. You may also have to install any 
+dependencies needed to run the code or complete some task. 
+
