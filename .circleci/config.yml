@@ -51,8 +51,5 @@ workflows:
           requires:
             - test
 
-Each job should have some common elements. 
-For example, before doing anything that works with code, 
-you will need to checkout. You may also have to install any 
-dependencies needed to run the code or complete some task. 
+
 
