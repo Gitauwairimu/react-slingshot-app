@@ -1,0 +1,11 @@
+---
+- name: Exercise for setting up a web server in an EC 
+  hosts: all
+  user: ubuntu
+  become: true
+  become_method: sudo
+  become_user: root
+  gather_facts: yes
+  #become_exe: 'sudo su -'
+  roles:
+    - setup
