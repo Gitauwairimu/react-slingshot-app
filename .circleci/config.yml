@@ -58,13 +58,12 @@ jobs:
     docker:
       - image: alpine:latest
     steps:
-      - run: apk add --update curl
       - run:
           name: simulate Failure
           command: |
                 return 1
       - destroy_infrastructure
-        when: on_fail:
+        when: on_fail
 
   smoke_test:
     docker:
