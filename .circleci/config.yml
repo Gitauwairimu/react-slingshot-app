@@ -34,10 +34,6 @@ jobs:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
-      - run:
-          name: Dont ask for key
-          command: |
-            export ANSIBLE_HOST_KEY_CHECKING=False
       - add_ssh_keys:
           # You can get this ID in the section where you registered the SSH Key
           fingerprints: [ff:fd:f3:67:a1:d3:3c:8f:d6:5b:9e:c5:3a:8e:f1:b1]
