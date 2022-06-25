@@ -54,16 +54,6 @@ jobs:
           command: |
             ansible-playbook ansible/main-remote.yml
 
-  simulate_failed_smoke_test:
-    docker:
-      - image: alpine:latest
-    steps:
-      - run:
-          name: simulate Failure
-          command: |
-                return 1
-      - destroy_infrastructure
-        when: on_fail
 
   smoke_test:
     docker:
@@ -89,7 +79,7 @@ workflows:
       - ansible
       #    requires:
        #     - create_infrastructure
-      -  simulate_failed_smoke_test
+      -  smoke_test
 
       
 
