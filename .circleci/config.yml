@@ -6,22 +6,23 @@ commands:
     steps:
       - run:
           name: Destroy Already Deployed Infrastructure
+          when: on_fail
           command: 
             aws cloudformation delete-stack --stack-name circleci-${CIRCLE_WORKFLOW_ID:0:5}
 
 jobs:
-  #create_infrastructure:
-   # docker:
-    #  - image: amazon/aws-cli
-    #steps:
-     # - checkout
-      #- run:
-       #   name: Create Cloudformation Stack
-        #  command: |
-         #   aws cloudformation deploy \
-          #      --template-file ansible/ec2.yaml \
-           #     --stack-name circleci-${CIRCLE_WORKFLOW_ID:0:5} \
-            #    --region us-east-2
+  create_infrastructure:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Create Cloudformation Stack
+          command: |
+            aws cloudformation deploy \
+                --template-file ansible/ec2.yaml \
+                --stack-name circleci-${CIRCLE_WORKFLOW_ID:0:5} \
+                --region us-east-2
 
   #update_inventory:
   #  docker:
@@ -60,10 +61,9 @@ jobs:
     steps:
       - run:
           name: simulate Failure
-          command: |
-            return 1
-            - destroy_infrastructure
-          when: on_fail
+          command: return 1
+      - destroy_infrastructure
+        when: on_fail
 
   smoke_test:
     docker:
@@ -80,13 +80,30 @@ jobs:
                 else
                   echo "The application failed"
                 fi
-            
+
+  create_infrastructureb: 
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Allow time to deploy stack resources
+          command: |
+            sleep 3m
+      - run:
+          name: Create Cloudformation Stack
+          command: |
+            aws cloudformation deploy \
+                --template-file ansible/ec2.yaml \
+                --stack-name circleci-${CIRCLE_WORKFLOW_ID:0:5} \
+                --region us-east-2
+
 workflows:
   version: 2
   infrastructure workflow:
     jobs:
-     # - create_infrastructure
-      - ansible
+      - create_infrastructureb
+      #- ansible
       #    requires:
        #     - create_infrastructure
       - simulate_failed_smoke_test
