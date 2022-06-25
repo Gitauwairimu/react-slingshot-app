@@ -70,7 +70,9 @@ workflows:
       - ansible
       #    requires:
        #     - create_infrastructure
-      -  smoke_test
+      -  smoke_test:
+          requires:
+            - ansible
       
 
 
