@@ -89,9 +89,8 @@ workflows:
       - ansible
       #    requires:
        #     - create_infrastructure
-      -  simulate_failed_smoke_test:
-          requires:
-            - ansible
+      -  simulate_failed_smoke_test
+
       
 
 
