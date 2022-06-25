@@ -57,7 +57,7 @@ jobs:
 
   simulate_failed_smoke_test:
     docker:
-      - image: alpine:latest
+      - image: amazon/aws-cli
     steps:
       - run:
           name: simulate Failure
@@ -92,11 +92,7 @@ jobs:
             aws cloudformation deploy \
                 --template-file ansible/ec2.yaml \
                 --stack-name circleci-${CIRCLE_WORKFLOW_ID:0:5} \
-                --region us-east-2
-      - run:
-          name: Allow time to deploy stack resources
-          command: |
-            sleep 3m
+
 
 workflows:
   version: 2
