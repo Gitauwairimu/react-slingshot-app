@@ -45,6 +45,22 @@ jobs:
           name: Run Playbook and Configure server
           command: |
             ansible-playbook ansible/main-remote.yml
+
+  smoke_test:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - run:
+          name: Test application Liveness
+          command: |
+                URL="https://3.145.74.250:3000/"
+                if curl -s --head "https://google.com" 
+                then
+                  echo "It worked!"
+                else
+                  echo "It failed"
+                fi
             
 workflows:
   version: 2
@@ -54,6 +70,7 @@ workflows:
       - ansible
       #    requires:
        #     - create_infrastructure
+      -  smoke_test
       
 
 
