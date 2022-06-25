@@ -15,7 +15,16 @@ jobs:
                 --stack-name circleci-${CIRCLE_WORKFLOW_ID:0:5} \
                 --region us-east-2
 
-
+  update_inventory:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Create Cloudformation Stack
+          command: |
+            aws ec2 describe-instances    --query 'Reservations[*].Instances[*].PublicIpAddress'    --output text >> inventory
+  
 
         
 workflows:
@@ -23,6 +32,7 @@ workflows:
   infrastructure workflow:
     jobs:
       - create_infrastructure
+      - update_inventory
 
 
 
