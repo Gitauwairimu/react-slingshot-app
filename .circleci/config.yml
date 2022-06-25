@@ -15,19 +15,19 @@ jobs:
                 --stack-name circleci-${CIRCLE_WORKFLOW_ID:0:5} \
                 --region us-east-2
 
-  update_inventory:
-    docker:
-      - image: amazon/aws-cli
-    steps:
-      - checkout
-      - run:
-          name: Update Inventory
-          command: |
-            aws ec2 describe-instances    --query 'Reservations[*].Instances[*].PublicIpAddress'    --output text >> ansible/inventory
-      - run:
-          name: Update Inventory
-          command: |
-            cat ansible/inventory
+  #update_inventory:
+  #  docker:
+  #    - image: amazon/aws-cli
+  #  steps:
+  #    - checkout
+  #    - run:
+  #        name: Update Inventory
+  #        command: |
+  #          aws ec2 describe-instances    --query 'Reservations[*].Instances[*].PublicIpAddress'    --output text >> ansible/inventory
+  #    - run:
+  #        name: Read Inventory
+  #        command: |
+  #          cat ansible/inventory
 
   ansible:
     docker:
