@@ -54,12 +54,12 @@ jobs:
       - run:
           name: Test application Liveness
           command: |
-                URL="https://3.145.74.250:3000/"
+                URL="http://3.145.74.250:3000/"
                 if curl -s --head "https://google.com" 
                 then
-                  echo "It worked!"
+                  echo "The application deployment worked!"
                 else
-                  echo "It failed"
+                  echo "The application failed"
                 fi
             
 workflows:
