@@ -50,6 +50,7 @@ workflows:
   version: 2
   infrastructure workflow:
     jobs:
+      - create_infrastructure
       - ansible
 
 
