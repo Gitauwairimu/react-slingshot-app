@@ -14,7 +14,24 @@ jobs:
                 --template-file ansible/ec2.yaml \
                 --stack-name circleci-${CIRCLE_WORKFLOW_ID:0:5} \
                 --region us-east-2
+  
+  Ansible_Payload:
+      docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+            # You can get this ID in the section where you registered the SSH Key
+            fingerprints: ff:fd:f3:67:a1:d3:3c:8f:d6:5b:9e:c5:3a:8e:f1:b1
+      - run:
+          name: Install Ansible
+          command: |
+            apk add --update ansible
 
+      - run:
+          name: Run Playbook and Configure server
+          command: |
+            ansible-playbook main-remote.yml -i inventory --private-key joeykey.pem
 
         
 workflows:
