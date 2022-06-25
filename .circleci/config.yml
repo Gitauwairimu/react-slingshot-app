@@ -45,7 +45,7 @@ jobs:
       - run:
           name: Run Playbook and Configure server
           command: |
-            ansible-playbook ansible/main-remote.yml -i ansible/inventory --ssh-common-args='-o StrictHostKeyChecking=no'
+            ansible-playbook ansible/main-remote.yml -i ansible/inventory
 
 workflows:
   version: 2
