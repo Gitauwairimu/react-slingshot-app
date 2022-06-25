@@ -64,7 +64,7 @@ jobs:
           command: |
                 return 1
       - destroy_infrastructure
-        when: on_fail
+        when: on_fail:
 
   smoke_test:
     docker:
