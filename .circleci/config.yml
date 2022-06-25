@@ -2,18 +2,18 @@
 version: 2.1
 
 jobs:
-  #create_infrastructure:
-  #  docker:
-  #    - image: amazon/aws-cli
-  #  steps:
-  #    - checkout
-  #    - run:
-  #        name: Create Cloudformation Stack
-  #        command: |
-  #          aws cloudformation deploy \
-  #              --template-file ansible/ec2.yaml \
-  #              --stack-name circleci-${CIRCLE_WORKFLOW_ID:0:5} \
-  #              --region us-east-2
+  create_infrastructure:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Create Cloudformation Stack
+          command: |
+            aws cloudformation deploy \
+                --template-file ansible/ec2.yaml \
+                --stack-name circleci-${CIRCLE_WORKFLOW_ID:0:5} \
+                --region us-east-2
 
   #update_inventory:
   #  docker:
@@ -36,7 +36,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           # You can get this ID in the section where you registered the SSH Key
-          fingerprints: [ff:fd:f3:67:a1:d3:3c:8f:d6:5b:9e:c5:3a:8e:f1:b1]
+          fingerprints: [da:a1:75:4f:c4:b8:f5:c1:38:d7:28:ac:28:82:e0:f0]
       - run:
           name: Install Ansible
           command: |
