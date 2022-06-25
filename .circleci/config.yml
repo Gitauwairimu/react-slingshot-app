@@ -14,8 +14,18 @@ jobs:
                 --template-file ansible/ec2.yaml \
                 --stack-name circleci-${CIRCLE_WORKFLOW_ID:0:5} \
                 --region us-east-2
+
+  update_inventory:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Create Cloudformation Stack
+          command: |
+            aws ec2 describe-instances    --query 'Reservations[*].Instances[*].PublicIpAddress'    --output text >> inventory
   
-  Ansible_Payload:
+  ansible_Payload:
       docker:
       - image: python:3.7-alpine3.11
     steps:
@@ -31,7 +41,7 @@ jobs:
       - run:
           name: Run Playbook and Configure server
           command: |
-            ansible-playbook main-remote.yml -i inventory --private-key joeykey.pem
+            ansible-playbook main-remote.yml -i inventory
 
         
 workflows:
@@ -39,6 +49,10 @@ workflows:
   infrastructure workflow:
     jobs:
       - create_infrastructure
+      - update_inventory:
+          requires:
+            - create_infrastructure
+      - ansible_Payload
 
 
 
