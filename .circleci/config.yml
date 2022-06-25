@@ -41,6 +41,10 @@ jobs:
           name: Install Ansible
           command: |
             apk add --update ansible
+      - run:
+          name: False key checking
+          command: |
+            export ANSIBLE_HOST_KEY_CHECKING=False
 
       - run:
           name: Run Playbook and Configure server
