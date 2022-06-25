@@ -52,6 +52,7 @@ workflows:
   infrastructure workflow:
     jobs:
       - ansible
+      - create_infrastructure
 
 
 
