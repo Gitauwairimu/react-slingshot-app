@@ -48,9 +48,9 @@ jobs:
 
   smoke_test:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: - image: alpine:latest
     steps:
-      - checkout
+      - run: apk add --update curl
       - run:
           name: Test application Liveness
           command: |
