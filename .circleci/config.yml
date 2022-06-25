@@ -21,9 +21,9 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Create Cloudformation Stack
+          name: Update Inventory
           command: |
-            aws ec2 describe-instances    --query 'Reservations[*].Instances[*].PublicIpAddress'    --output text >> inventory
+            aws ec2 describe-instances    --query 'Reservations[*].Instances[*].PublicIpAddress'    --output text >> ansible/inventory
   
 
         
@@ -32,7 +32,9 @@ workflows:
   infrastructure workflow:
     jobs:
       - create_infrastructure
-      - update_inventory
+      - update_inventory:
+          requires:
+           - create_infrastructure
 
 
 
