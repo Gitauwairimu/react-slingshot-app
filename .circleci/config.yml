@@ -108,7 +108,7 @@ workflows:
        #     - create_infrastructure
       - simulate_failed_smoke_test:
           requires:
-            - create_infrastructure
+            - create_infrastructureb
 
       
 
