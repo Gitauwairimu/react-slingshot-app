@@ -38,9 +38,6 @@ jobs:
           # You can get this ID in the section where you registered the SSH Key
       #    fingerprints: [da:a1:75:4f:c4:b8:f5:c1:38:d7:28:ac:28:82:e0:f0]
       - run:
-          name: No Key checking
-          shell: export ANSIBLE_HOST_KEY_CHECKING=False
-      - run:
           name: Install Ansible
           command: |
             apk add --update ansible
