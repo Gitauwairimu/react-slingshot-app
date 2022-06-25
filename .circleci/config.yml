@@ -24,8 +24,10 @@ jobs:
           name: Update Inventory
           command: |
             aws ec2 describe-instances    --query 'Reservations[*].Instances[*].PublicIpAddress'    --output text >> ansible/inventory
-  
-
+      - run:
+          name: Update Inventory
+          command: |
+            cat ansible/inventory
         
 workflows:
   version: 2
