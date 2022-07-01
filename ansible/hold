@@ -31,3 +31,13 @@
   become_user: root
     roles:
    - setup
+
+
+
+
+
+     Outputs:
+    PipelineID:
+      Value: !Sub ${PipelineID}
+      Export:
+        Name: PipelineID
