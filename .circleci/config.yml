@@ -103,12 +103,12 @@ jobs:
           command: |
             ls
       - run:
-          name: Create and deploy static website
+          name: Create bucket and deploy static website
           command: |
             aws cloudformation deploy \
-                --template-file ansible/bucket.yml \
-                --stack-name circleci-${CIRCLE_WORKFLOW_ID:0:5} \
-                --parameter-overrides MyBucketName="mybucket-${CIRCLE_WORKFLOW_ID:0:7}"
+              --template-file ansible/bucket.yml \
+              --stack-name circleci-${CIRCLE_WORKFLOW_ID:0:5} \
+              --parameter-overrides MyBucketName="mybucket-${CIRCLE_WORKFLOW_ID:0:7}"
       - run: aws s3 sync . s3://mybucket-${CIRCLE_WORKFLOW_ID:0:7} --delete
 
   # Fetch and save the pipeline ID (bucket ID) responsible for the last release.
