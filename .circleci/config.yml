@@ -161,7 +161,7 @@ workflows:
   version: 2
   Promote Deployment:
     jobs:
-      - create_infrastructureb
+      #- create_infrastructureb
       #- ansible
       #    requires:
        #     - create_infrastructure
